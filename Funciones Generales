@@ -1,4 +1,3 @@
-¡Nuevo! Combinaciones de teclas … Las combinaciones de teclas de Drive se han actualizado para que puedas navegar escribiendo las primeras letras
 # deriv_RK implementa el método de Runge-Kutta.
 # La derivada debe admitir los parámetros x, t y, opcionalmente, parámetros constantes
 import math
