@@ -25,37 +25,55 @@ La función lee el fichero indicado fila a fila. Devuelve una lista con dos comp
 La matriz Measures está formada por todas las líneas que contienen sólo números
 El vector colValues se construye con todos los valores reales de la fila que empieza por la cadena colValLabel.
 """
-def leeFichero ( nombrFich, colValLabel= 'Wavelength',intercaladas=True, separador=','):
-    fichero = open(nombrFich, 'r')
+def leeFichero(nombrFich, colValLabel='Wavelength nm.', intercaladas=True, separador=','):
+  # Abrimos el fichero
+  with open(nombrFich,'r') as fichero:
+    # Inicializamos las variables
+    col_names = []
+    data_rows = []
+    #row_names = []
 
-    nLineas = 0
-    colValues = np.array(())
+    # Iteramos por las lineas del fichero
     for linea in fichero:
-        row = np.array(())
-        #print (linea)
-        if linea.split(separador)[0] == colValLabel:
-            print(linea)
-            for dato in linea.split(separador):
-                try:
-                    colValues = np.append (colValues, float(dato))
-                except ValueError:
-                    pass
-        try:
-            for dato in linea.split(separador):
-                if dato != '':
-                    row = np.append(row, float(dato))
-            if intercaladas:
-                row = np.append(row[0], row[1::2])
-            if nLineas == 0:
-                matriz = np.empty((0, len(row)))
-            nLineas = nLineas + 1
-            matriz = np.vstack((matriz, row))
-            #print(row)
-        except ValueError:
-            pass
+      row = []
 
-    fichero.close()
-    return dict (colValues=colValues, measures = matriz)
+      # Si esta línea es la linea que contiene la colValLabel, extraemos los nombres/valores de las columna
+      if linea.split(separador)[0] == colValLabel:
+        col_names = [dato.strip() for dato in linea.split(separador) if dato.strip()]
+      else:
+          # Procesamos cada fila de datos
+          values=[dato.strip() for dato in linea.split(separador) if dato.strip()]
+
+          if values:
+            #row_name = values[0] # El primer valor es el nombre de la fila (Wavelength)
+            row_values = values # El resto de los valores lo ponemos como datos
+
+            # Si intercaladas es cierto, tomamos los valores en posiiones pares de row_values
+            if intercaladas:
+              row_values=row_values[::2]
+
+            # Intentamos convertir cada valor en float, pero nos quedamos con string si no es possible
+            processed_row=[]
+            for dato in row_values:
+              try:
+                processed_row.append(float(dato)) # Intentamos convertir en float
+              except ValueError:
+                processed_row.append(dato) # Nos quedamos el string si no es in float
+            
+            #row_names.append(row_name) # Recogemos los nombres de las filas
+            data_rows.append(processed_row) # Recogemos los datos de las filas
+
+  # Creamos un DataFrame para los datos recogidos
+  df = pd.DataFrame(data_rows)
+
+  # Ponemos los col_names como nombres de las columna, asegurandonos que su numero coincide con el
+  # número de columnas en los datos.
+  if len(col_names)== len(df.columns) :
+    df.columns = col_names # Nos saltamos la primera etiqueta (que es para los nombre de las filas) REVISAR
+  else:
+    print(f"Warning: The number of columns in the data does not match the header size")
+  return df
+
 
 """
 Dada una lista, lectura, devuelve una matriz de dos columnas:
@@ -63,20 +81,69 @@ i) La primera columna almacena los valores de lectura['colValues']
 ii) La componente i-ésima de la segunda columna es la diferencia 
     entre los valores máximo y mínimo de la columna i+2 de la matriz lectura['colValues']
 """
-def preprocessAbsorbance(lectura):
-    colValues, measures = [lectura[nombr] for nombr in ('colValues', 'measures')]
-    coordMin = np.where(measures[:, 2:] == np.min(measures[:, 2:]))
-    coordMin = (coordMin[0][0], coordMin[1][0] + 2)
-    coordMax = np.where(measures[:, 2:] == np.max(measures[:, 2:]))
-    coordMax = (coordMax[0][0], coordMax[1][0] + 2)
-    print('Mínimo: %g (%g)\t Máximo: %g (%g)\n' %
-          (np.min(measures[:, 2:]), measures[coordMin],
-           np.max(measures[:, 2:]), measures[coordMax]))
-    deltaAbs = np.array(())
-    for col in range(2, measures.shape[1]):
-        deltaAbs = np.append(deltaAbs, measures[coordMax[0], col] - measures[coordMin[0], col])
-    out = np.column_stack((colValues, deltaAbs))
-    return out
+def preprocesaAbsorbance(df):
+  #df=datos
+  # Extraemos los valores de la primera columna (Wavelength nm.)
+  wavelength= df.iloc[:,0] # La primer columna contiene los valores de longitud de onda
+
+  # Extramemos las medidas de absorbancia (todas las columnas menos la primera)
+  absorbance= df.iloc[:,1:]
+
+  # Extraemos los nombres de las columnas a partir de la tercera (incluida)
+  volume= df.columns[2:]
+  volume = pd.to_numeric(volume)
+
+  # Inicializamos las listas para almacenar los mínimos, máximos y sus respectivas longitudes de onda
+  min_vals = []
+  max_vals = []
+  min_wave = []
+  max_wave = []
+
+  # Iteramos sobre cada columna (excepto la primera y la segunda, longitud de onda y baseline respectivamente)
+  for col in df.columns[2:]: 
+    # Encontramos el valor mínimo, máximo y su correspondiente longitud de onda
+      min_val = df[col].min()
+      max_val = df[col].max()
+
+      min_wl = df[df[col] == min_val]['Wavelength nm.'].iloc[0]
+      max_wl = df[df[col] == max_val]['Wavelength nm.'].iloc[0]
+
+      # Almacenamos en las listas
+      min_vals.append(min_val)
+      max_vals.append(max_val)
+      min_wave.append(min_wl)
+      max_wave.append(max_wl)
+
+
+  #Calculamos el primedio de las longitudes de onda correpondientes a los mínimos y máximos
+  avg_min_wave = np.mean(min_wave)
+  avg_max_wave = np.mean(max_wave)
+
+  # Redondeamos las longitudes al incremente más cercano de 0.5 nm
+  avg_min_wave = round(avg_min_wave *2)/2 # Asegurando incrementos de 0.5 nm
+  avg_max_wave = round(avg_max_wave *2)/2 
+
+
+
+  # Encontramos las filas en el DataFrame que corresponden a las longitudes de onda redondeadas
+  min_abs = df[df['Wavelength nm.'] == avg_min_wave].iloc[:,2:].reset_index(drop=True).T
+  max_abs = df[df['Wavelength nm.'] == avg_max_wave].iloc[:,2:].reset_index(drop=True).T
+
+  # Calculamos deltaAbs como la diferencia entre los absorbancias en las longitudes de onda redondeadas
+  deltaAbs = max_abs - min_abs
+
+  # Creamos un DataFrame de salida con los resultados
+  out_df = deltaAbs
+  out_df.insert(0, column ='',value=volume)
+  out_df.reset_index(drop=True, inplace=True)
+  out_df.columns= ['Volume ul', 'DeltaAbs']
+
+
+  # Imprimimos los valores calculados
+  print(f'Mínimo promedio:  ({avg_min_wave} nm)\t Máximo promedio:  ({avg_max_wave} nm)')
+  print(f'  {out_df}\n')
+
+  return out_df
 
 # Algoritmo Runge-Kutta 4º orden
 def deriv_RK (fDeriv,x,t,deltaT,**paramDeriv):
