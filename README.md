@@ -26,7 +26,7 @@ This software is created in Google Colab. To access it, click on the Google Cola
 
 **Step 6**: In this cell *(Gráfico ΔAbsorbancia vs Volumen (µL), cell4)* the data generated from *PreprocesaAbsorbance* will be plotted.
 
-**Step 7**: The **Parámetros** cell is very important. Here you will write the parameters needed by the model and select whether they are fixed or not. If the parameter if fixed, the **procesa** function (responsible of the fitting) will not optimized those values. **Warning:** if the values inputted for the parameters differ greatly from reality even if you mark them as not fixed the fitting process would have worse results or even fail. A good initial estimation, will provide a better fitting.
+**Step 7**: The **Parámetros** cell is very important. Here you will write the parameters needed by the model and select whether they are fixed or not. If the parameter if fixed, the **procesa** function (responsible of the fitting) will not optimized those values. **Warning:** if the values inputted for the parameters differ greatly from reality even if they are marked as not fixed the fitting process might have worse results or even fail. A good initial estimation, will provide a better fitting.
 
 **Step 8**: Run the *Procesa* cell which will perform the fitting via least squares method.
 
