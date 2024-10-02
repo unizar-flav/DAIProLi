@@ -43,7 +43,7 @@ The program was created to handle csv whose numbers have points for decimal sepa
 The most common alternative format is to have commas as decimal separators and points as thousands separators. In this particular case there are several solutions depending on the spreadsheet software used:
 
 ### Excel
-In the latest versions of this software you can use the solution depicted in the following [YouTube video] (https://www.youtube.com/watch?v=TC_guUz64i8). Once you have opened the dataset:
+In the latest versions of this software you can use the solution depicted in the following [YouTube video](https://www.youtube.com/watch?v=TC_guUz64i8). Once you have opened the dataset:
 1. Click on **File**.
 2. Then, go to **Options**.
 3. In the new window that appears, click on **Advanced**.
