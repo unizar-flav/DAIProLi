@@ -47,7 +47,7 @@ In the latest versions of this software you can use the solution depicted in the
 1. Click on **File**.
 2. Then, go to **Options**.
 3. In the new window that appears, click on **Advanced**.
-4. Once there look for the Use system separator and modify the decimal and thousands separator accordingly (, and . ; respectively).
+4. Once there look for the Use system separator and modify the decimal and thousands separator accordingly ("," and "."  respectively).
 
 Beware this can only be done in the Desktop version of Excel, the online version of Excel lacks this personalization and for the moment lacks a solution.
 
