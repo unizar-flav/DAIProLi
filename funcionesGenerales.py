@@ -4,7 +4,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares
-import pandas as pd
+
 
 argLeastSquares = dict(ftol=1e-13, xtol=1e-13, gtol=1e-13,
                        verbose=True, kwargs={})
