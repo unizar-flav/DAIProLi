@@ -14,19 +14,32 @@ This software is created in Google Colab. To access it, click on the Google Cola
 | 300    | -0.0002    | 0.0004     | 0.0031     | 0.0034     | ...   |
 | 300.5  | -0.0001    | 0.0004     | 0.0029     | 0.0034     | ...   |
 | 301    | -0.0002    | 0.0002     | 0.0027     | 0.0032     | ...   |
-| ...    | ...   | ...    | ...   | ...   | ..   |
+| ...    | ...   | ...    | ...   | ...   | ...   |
 
-**Step 2**: Load the libraries and functions *(Librerias y funciones)*. This step only needs to be performed once, regardless of the number of datasets processed.
 
-**Step 3**: Run the next cell *(Subir archivo y formato csv)* and do not change the parameters. A message will appear below it asking you to select the file to be uploaded.
+**Example 2**
+|...      | ...      | ...     |...      |...      |...      |...     |...      | ...     |...      |
+|Name     | Baseline |         |  2      |         | 4       |        | 6       |         | ...     |
+| --------|  ------- | ------- | ------- | ------- | ------- |------- | ------- | ------- | ------- |
+|         | 300      | -0.0002 | 300     | 0.0004  | 300     | 0.0031 | 300     | 0.0034  | ...   |
+|         | 300.5    | -0.0001 | 300.5   | 0.0004  | 300.5   | 0.0029 | 300.5   | 0.0034  | ...   |
+|         | 301      | -0.0002 | 301     | 0.0002  | 301     | 0.0027 | 301     | 0.0032  | ...   |
+|...      |...       |...      |...      | ...     | ...     |...     |...      | ...     | ...     |
 
-**Step 4**: Run *PreprocesaAbsorbance*, in this cell the difference between minimum and maximum in each spectra will be performed.
+**Step 2**: Load the libraries and functions *(Modules and functions)*. This step only needs to be performed once, regardless of the number of datasets processed.
+
+**Step 3**: Run the next cell *(Upload file)* and do not change the parameters. A message will appear below it asking you to select the file to be uploaded.
+
+**Step 4**: Run *diff_absorbance*, in this cell the difference between minimum and maximum in each spectra will be performed. There is an option to choose the method to determine the minimum and maximum wavelengths. It can take the following three arguments: *"Mean"*, *"Median"* and *"Manual"*.
+1. *"Mean"*: it uses the  mean of wavelengths at minimum and maximum absorbance values of all conditions evaluated.
+2. *"Median"*: it uses the median of the wavelengths at minimum and maximum absorbance values of all conditions evaluated. Default is *Median*.
+3. *"Manual"*: it uses *min_chosen* and *max_chosen* as the chosen wavelengths for the minimum and maximum absorbance, respectively.
 
 **Step 5**: In this cell *(Gráfico espectros)* you will be able to plot the spectra recorded for each condition in 2D and 3D. You have the option to adjust all spectra so that their absorbance is zero at a given target wavelength.
 
-**Step 6**: Here, in *Modelo*, the model that may explain the experimental data is written
+**Step 6**: Here, in *Model*, the model that may explain the experimental data is written
 
-**Step 7**: In this cell *(Gráfico ΔAbsorbancia vs Volumen (µL))* the data generated from *PreprocesaAbsorbance* will be plotted.
+**Step 7**: In this cell *(Gráfico ΔAbsorbancia vs Volumen (µL))* the data generated from *diff_absorbance* will be plotted.
 
 **Step 8**: The **Parámetros** cell is very important. Here you will write the parameters needed by the model and select whether they are fixed or not. If the parameter is fixed, the **procesa** function (responsible for the fitting) will not optimize those values. **Warning:** if the values inputted for the parameters differ greatly from reality even if they are marked as not fixed the fitting process might have worse results or even fail. A good initial estimation, will provide a better fitting.
 
