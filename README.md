@@ -10,7 +10,7 @@ This software is created in Google Colab. To access it, click on the Google Cola
 **Step 1**: Check the format of the data you have, you need to export your spreadsheet into a csv file. The way the data is saved must be the same as in the following examples:
 
 **Example 1:** set *intercaladas=False* in the function *leeFichero()*:
-| Wavelength nm.    | Baseline |  2 | 4 | 6 | ... |
+| Wavelength (nm)    | Baseline |  2 | 4 | 6 | ... |
 | -------- | ------- | ------- | ------- | ------- | ------- |
 | 300    | -0.0002    | 0.0004     | 0.0031     | 0.0034     | ...   |
 | 300.5  | -0.0001    | 0.0004     | 0.0029     | 0.0034     | ...   |
