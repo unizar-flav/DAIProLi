@@ -18,7 +18,7 @@ This software is created in Google Colab. To access it, click on the Google Cola
 | ...    | ...   | ...    | ...   | ...   | ...   |
 
 
-**Example 2:** set*intercaladas=True* in the function *leeFichero()*:
+**Example 2:** set *intercaladas=True* in the function *leeFichero()*:
 |...      | ...      | ...     |...      |...      |...      |...     |...      | ...     |...      |...      |...      |
 | --------|  ------- | ------- | ------- | ------- | ------- |------- | ------- | ------- | ------- | ------- | ------- |
 |Name     | Baseline |         | 0       |         |  2      |         | 4       |        | 6       |         | ...     |
