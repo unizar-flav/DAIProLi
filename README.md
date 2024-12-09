@@ -30,7 +30,7 @@ This software is created in Google Colab. To access it, click on the Google Cola
 |         | 301      | -0.015  | 301     | -0.0002 | 301     | 0.0002 | 301     | 0.0027  | 301     | 0.0032  | ...     |
 |...      |...       |...      |...      | ...     | ...     |...     |...      | ...     | ...     | ...     | ...     |
 
-**Step 2**: Load the modules and functions *(Modules and functions)*. This step only needs to be performed once, regardless of the number of datasets processed.
+**Step 2**: Load the libraries, modules and functions *(Environment)*. This step only needs to be performed once, regardless of the number of datasets processed.
 
 **Step 3**: Run the next cell *(Upload file)* and do not change the parameters. A message will appear below it asking the user to select the file to be uploaded.
 
