@@ -52,7 +52,7 @@ This software is created in Google Colab. To access it, click on the Google Cola
 
 **Step 10**: Here *(Plot Δ Absorbance vs Volume (µL) with model fitting)* it plots the the data generated from *diff_absorbance* (experimental data) and the values obtained using the model and the optimized parameters from **procesa**.
 
-**Step 11**: Lastly, this cell saves and export all the data inputted and generated. The datasets are saved in csv format and the plots are saved in html and png. All of this items are downloaded in a zip which the user can name (but it will always have the date and hour of when the cells was run as suffix).
+**Step 11**: Lastly, this cell *(Export results)* saves and export all the data inputted and generated. The datasets are saved in csv format and the plots are saved in html and png. All of this items are downloaded in a zip which the user can name (but it will always have the date and hour of when the cells was run as suffix).
 
 ## Troubleshooting
 
